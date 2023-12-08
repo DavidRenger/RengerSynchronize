@@ -1,0 +1,80 @@
+sudo_root(8)                                                                                                      System Manager's Manual                                                                                                      sudo_root(8)
+
+NNAAMMEE
+       sudo_root - How to run administrative commands
+
+SSYYNNOOPPSSIISS
+       ssuuddoo _c_o_m_m_a_n_d
+
+       ssuuddoo --ii
+
+IINNTTRROODDUUCCTTIIOONN
+       By default, the password for the user "root" (the system administrator) is locked. This means you cannot login as root or use su. Instead, the installer will set up sudo to allow the user that is created during install to run all administrative
+       commands.
+
+       This means that in the terminal you can use sudo for commands that require root privileges. All programs in the menu will use a graphical sudo to prompt for a password. When sudo asks for a password, it needs yyoouurr ppaasssswwoorrdd,, this  means  that  a
+       root password is not needed.
+
+       To run a command which requires root privileges in a terminal, simply prepend ssuuddoo in front of it. To get an interactive root shell, use ssuuddoo --ii.
+
+AALLLLOOWWIINNGG OOTTHHEERR UUSSEERRSS TTOO RRUUNN SSUUDDOO
+       By default, only the user who installed the system is permitted to run sudo. To add more administrators, i. e. users who can run sudo, you have to add these users to the group 'sudo' by doing one of the following steps:
+
+       * In a shell, do
+
+           ssuuddoo aadddduusseerr _u_s_e_r_n_a_m_e ssuuddoo
+
+       * Use the graphical "Users & Groups" program in the "System settings" menu to add the new user to the ssuuddoo group.
+
+BBEENNEEFFIITTSS OOFF UUSSIINNGG SSUUDDOO
+       The benefits of leaving root disabled by default include the following:
+
+       * Users do not have to remember an extra password, which they are likely to forget.
+
+       * The installer is able to ask fewer questions.
+
+       * It avoids the "I can do anything" interactive login by default - you will be prompted for a password before major changes can happen, which should make you think about the consequences of what you are doing.
+
+       * Sudo adds a log entry of the command(s) run (in //vvaarr//lloogg//aauutthh..lloogg).
+
+       * Every attacker trying to brute-force their way into your box will know it has an account named root and will try that first. What they do not know is what the usernames of your other users are.
+
+       * Allows easy transfer for admin rights, in a short term or long term period, by adding and removing users from the sudo group, while not compromising the root account.
+
+       * sudo can be set up with a much more fine-grained security policy.
+
+       * On systems with more than one administrator using sudo avoids sharing a password amongst them.
+
+DDOOWWNNSSIIDDEESS OOFF UUSSIINNGG SSUUDDOO
+       Although for desktops the benefits of using sudo are great, there are possible issues which need to be noted:
+
+       * Redirecting the output of commands run with sudo can be confusing at first. For instance consider
+
+           ssuuddoo llss >> //rroooott//ssoommeeffiillee
+
+         will not work since it is the shell that tries to write to that file. You can use
+
+           llss || ssuuddoo tteeee //rroooott//ssoommeeffiillee
+
+         to get the behaviour you want.
+
+       * In a lot of office environments the ONLY local user on a system is root. All other users are imported using NSS techniques such as nss-ldap. To setup a workstation, or fix it, in the case of a network failure where nss-ldap is broken, root is
+         required. This tends to leave the system unusable. An extra local user, or an enabled root password is needed here.
+
+GGOOIINNGG BBAACCKK TTOO AA TTRRAADDIITTIIOONNAALL RROOOOTT AACCCCOOUUNNTT
+       TThhiiss iiss nnoott rreeccoommmmeennddeedd!!
+
+       To enable the root account (i.e. set a password) use:
+
+           ssuuddoo ppaasssswwdd rroooott
+
+       Afterwards, edit the sudo configuration with ssuuddoo vviissuuddoo and comment out the line
+
+           %sudo  ALL=(ALL) ALL
+
+       to disable sudo access to members of the sudo group.
+
+SSEEEE AALLSSOO
+       ssuuddoo(8), hhttttppss::////wwiikkii..uubbuunnttuu..ccoomm//RRoooottSSuuddoo
+
+                                                                                                                      February 8, 2006                                                                                                         sudo_root(8)
