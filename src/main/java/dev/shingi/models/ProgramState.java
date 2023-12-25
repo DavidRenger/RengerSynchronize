@@ -6,6 +6,11 @@ import java.util.List;
 public class ProgramState {
     private static ProgramState instance = new ProgramState();
 
+    public static final String FILE_OUTPUT_PATH = "";
+    public static final String SUBSCRIPTION_KEY = "328669a875374b17925cbe5e726ef89e";
+    public static final String BASE_URI = "https://b2bapi.snelstart.nl/v2/";
+    // public static HashMap<Class<T>, String> ENDPOINT_MAP;
+
     private List<Runnable> xObject1Listeners = new ArrayList<>();
     private List<Runnable> xObjectListListeners = new ArrayList<>();
 
